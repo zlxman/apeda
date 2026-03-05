@@ -3,185 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>APEDA | LIMITED EDITION</title>
-    
-    <!-- إضافة اللوجو في شريط المتصفح (Favicon) -->
-    <link rel="icon" type="image/png" href="images/00.png">
-    <link rel="apple-touch-icon" href="images/00.png">
-
+    <title>APEDA | SECURE STORE</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #fff; color: #111; overflow-x: hidden; }
-        
-        /* UI Elements */
-        .nav-link { position: relative; font-size: 0.75rem; font-weight: 500; transition: color 0.2s; letter-spacing: 0.1em; }
-        .nav-link::after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #000; transition: width 0.25s ease; }
-        .nav-link:hover::after { width: 100%; }
-
-        .product-image-container { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #fdfdfd; }
+        body { font-family: 'Inter', sans-serif; background-color: #fff; color: #111; overflow-x: hidden; direction: ltr; }
+        .product-image-container { position: relative; aspect-ratio: 3/4; overflow: hidden; background: #fdfdfd; border-radius: 4px; }
         .product-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1); }
         .product-card:hover .product-image { transform: scale(1.05); }
-
-        .size-btn { border: 1px solid #eee; padding: 8px 14px; font-size: 0.7rem; cursor: pointer; transition: 0.3s; min-width: 45px; text-align: center; }
-        .size-btn.active { background: #000; color: #fff; border-color: #000; }
         
-        .color-dot { width: 18px; height: 18px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.05); transition: 0.3s; position: relative; }
-        .color-dot.active::after { content: ''; position: absolute; inset: -4px; border: 1px solid #000; border-radius: 50%; }
+        .size-btn { border: 1px solid #e5e7eb; padding: 10px 16px; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease; min-width: 50px; text-align: center; border-radius: 2px; font-weight: 600; }
+        .size-btn.active { background: #000; color: #fff; border-color: #000; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .size-btn:hover:not(.active) { border-color: #000; }
 
-        /* Checkout Modal */
-        #orderModal { 
-            display: none; 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(0, 0, 0, 0.7); 
-            z-index: 1000; 
-            align-items: center; 
-            justify-content: center; 
-            backdrop-filter: blur(10px); 
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
-            cursor: pointer; 
-        }
-
-        .modal-container {
-            background: #fff;
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.3);
-            position: relative;
-            animation: slideUp 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-            cursor: default; 
-        }
-
-        .input-group { position: relative; margin-bottom: 25px; }
-        .input-group input { width: 100%; padding: 12px 0; font-size: 0.85rem; border: none; border-bottom: 1px solid #e0e0e0; outline: none; background: transparent; }
-        .input-group label { position: absolute; top: 12px; left: 0; font-size: 0.7rem; color: #999; text-transform: uppercase; letter-spacing: 0.1em; pointer-events: none; transition: 0.3s ease; }
-        .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -12px; font-size: 0.6rem; color: #000; font-weight: 700; }
-        .input-group input:focus { border-bottom: 1px solid #000; }
-
-        .order-summary-box { background: #fbfbfb; padding: 20px; margin-bottom: 30px; border: 1px solid #f5f5f5; }
+        .color-dot { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; border: 1px solid rgba(0,0,0,0.1); transition: 0.3s; position: relative; }
+        .color-dot.active::after { content: ''; position: absolute; inset: -4px; border: 1.5px solid #000; border-radius: 50%; }
+        
+        #orderModal { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.6); z-index: 1000; align-items: center; justify-content: center; backdrop-filter: blur(8px); padding: 16px; animation: fadeIn 0.3s ease; }
+        .modal-container { background: #fff; width: 100%; max-width: 440px; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); animation: slideUp 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        
+        .close-modal-btn { position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #f3f4f6; border-radius: 50%; border: none; transition: 0.2s; z-index: 10; }
+        .close-modal-btn:hover { background: #e5e7eb; transform: rotate(90deg); }
+        
+        .input-group { position: relative; margin-bottom: 24px; text-align: right; }
+        .input-group input { width: 100%; padding: 12px 0; font-size: 0.9rem; border: none; border-bottom: 2px solid #f3f4f6; outline: none; background: transparent; transition: border-color 0.3s; direction: rtl; }
+        .input-group label { position: absolute; top: 12px; right: 0; font-size: 0.85rem; color: #9ca3af; pointer-events: none; transition: 0.3s ease; }
+        .input-group input:focus { border-bottom-color: #000; }
+        .input-group input:focus + label, .input-group input:not(:placeholder-shown) + label { top: -14px; right: 0; font-size: 0.75rem; color: #000; font-weight: 700; }
 
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        @keyframes slideUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-
-        .qty-box { display: flex; border: 1px solid #eee; width: fit-content; }
-        .qty-btn { width: 35px; height: 35px; background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .qty-val { width: 35px; text-align: center; border: none; font-size: 0.8rem; font-weight: 600; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         
-        .close-modal-btn { 
-            position: absolute; 
-            top: 15px; 
-            right: 15px; 
-            width: 30px; 
-            height: 30px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            z-index: 1010; 
-            background: #f1f1f1;
-            border-radius: 50%;
-            color: #000;
-            border: none;
-            transition: 0.3s;
+        @media (max-width: 640px) {
+            .modal-container { margin-bottom: 0; border-radius: 20px 20px 0 0; position: fixed; bottom: 0; max-width: 100%; animation: slideUpFull 0.4s ease-out; }
         }
-        .close-modal-btn:hover { 
-            background: #000; 
-            color: #fff;
-            transform: scale(1.1);
-        }
+        @keyframes slideUpFull { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <div class="bg-black text-white text-[9px] py-2.5 text-center tracking-[0.2em] uppercase font-medium">
-        World-wide Shipping • Limited 2026 Drop
-    </div>
-
-    <header class="border-b border-gray-50 sticky top-0 bg-white z-50 px-6">
+    <header class="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-50 px-6">
         <div class="container mx-auto flex items-center justify-between h-16 md:h-20">
-            <nav class="hidden md:flex gap-10">
-                <a href="#" class="nav-link">SHOP ALL</a>
-                <a href="#" class="nav-link">ARCHIVE</a>
-            </nav>
-            <div class="md:hidden text-lg"><i class="fas fa-bars"></i></div>
-            
-            <div class="absolute left-1/2 -translate-x-1/2">
-                <img src="images/00.png" alt="APEDA" class="h-8 md:h-10 object-contain cursor-pointer" onerror="this.src='https://placehold.co/120x40?text=APEDA'">
-            </div>
-
-            <div class="flex gap-6 items-center">
-                <i class="far fa-search text-sm"></i>
-                <div class="relative">
-                    <i class="far fa-shopping-bag text-lg"></i>
-                    <span id="cartCount" class="absolute -top-1.5 -right-2 bg-black text-white text-[8px] w-4 h-4 rounded-full flex items-center justify-center font-bold">0</span>
-                </div>
-            </div>
+            <div class="text-[12px] font-black tracking-[0.3em] uppercase">A P E D A</div>
+            <div class="flex gap-6 items-center"><i class="fa-solid fa-bag-shopping text-xl"></i></div>
         </div>
     </header>
 
-    <main class="container mx-auto px-6 py-16">
-        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
-            <!-- المنتجات سيتم إنشاؤها عبر JavaScript -->
-        </div>
+    <main class="container mx-auto px-6 py-12">
+        <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 gap-y-16"></div>
     </main>
 
-    <!-- PREMIUM MODAL -->
     <div id="orderModal" onclick="closeModal()">
         <div class="modal-container" onclick="event.stopPropagation()">
-            <button class="close-modal-btn" onclick="closeModal()">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="p-8 pt-12">
-                <div class="text-center mb-8">
-                    <h2 class="text-xs font-extrabold tracking-[0.3em] uppercase">Checkout</h2>
-                    <p class="text-[9px] text-gray-400 mt-2 uppercase tracking-widest">Complete your limited order</p>
+            <button class="close-modal-btn" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="p-8">
+                <div class="mb-6 text-center">
+                    <h2 class="text-[10px] font-black tracking-[0.4em] uppercase mb-2 text-gray-400">Confirmation</h2>
+                    <div class="h-0.5 w-8 bg-black mx-auto mt-2"></div>
                 </div>
                 
-                <div class="order-summary-box">
-                    <h4 class="text-[0.6rem] font-bold tracking-[0.2em] text-gray-400 mb-2">YOUR SELECTION</h4>
-                    <div id="summaryContent" class="text-[10px] font-medium tracking-wide leading-loose"></div>
-                </div>
-
+                <div id="summaryContent" class="bg-gray-50 rounded-lg p-5 mb-6 text-[11px] border border-gray-100 text-right"></div>
+                
                 <form id="orderForm">
-                    <div class="input-group">
-                        <input type="text" id="custName" placeholder=" " required>
-                        <label>Full Name</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="tel" id="custPhone" placeholder=" " required>
-                        <label>WhatsApp Number</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="custCity" placeholder=" " required>
-                        <label>City</label>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" id="custAddress" placeholder=" " required>
-                        <label>Full Shipping Address</label>
+                    <div class="space-y-1 mb-8">
+                         <p class="text-[10px] font-bold uppercase tracking-widest text-right mb-4 border-r-2 border-black pr-3">بيانات التوصيل</p>
+                        <div class="input-group">
+                            <input type="text" id="custName" placeholder=" " required>
+                            <label>الاسم الكامل</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" id="custPhone" placeholder=" " required>
+                            <label>رقم الواتساب</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="custCity" placeholder=" " required>
+                            <label>المدينة</label>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" id="custAddress" placeholder=" " required>
+                            <label>العنوان بالتفصيل (الحي، الشارع، رقم المنزل)</label>
+                        </div>
                     </div>
 
-                    <button type="submit" class="w-full bg-black text-white py-4 font-bold text-[10px] tracking-[0.3em] hover:bg-zinc-800 transition uppercase mt-2">
-                        Confirm Purchase
+                    <button type="submit" class="w-full bg-black text-white py-4 rounded-full font-bold text-[11px] tracking-widest uppercase hover:bg-zinc-800 transition-all transform active:scale-[0.98] shadow-lg shadow-gray-200">
+                        إتمام الطلب عبر واتساب <i class="fab fa-whatsapp ml-2"></i>
                     </button>
-                    <p class="text-center text-[8px] text-gray-400 mt-4 tracking-widest uppercase">Payment upon delivery (COD)</p>
+                    <div class="mt-6 flex items-center justify-center gap-4 text-gray-300">
+                        <span class="h-px bg-gray-100 flex-1"></span>
+                        <i class="fa-solid fa-shield-halved text-[12px]"></i>
+                        <span class="h-px bg-gray-100 flex-1"></span>
+                    </div>
+                    <p class="text-center text-[9px] text-gray-400 mt-4 uppercase tracking-tighter">الدفع عند الاستلام • التوصيل سريع • خدمة 24/7</p>
                 </form>
             </div>
         </div>
     </div>
 
-    <footer class="bg-white border-t py-12 px-6 text-center">
-        <p class="text-[9px] text-gray-300 tracking-[0.5em] uppercase">APEDA — EST. 2026 — MOROCCO</p>
-    </footer>
-
     <script>
-        // إعدادات الواتساب فقط
-        const WHATSAPP_NUMBER = "212777128266";
+        const CONFIG = {
+            WHATSAPP_NUMBER: "212777128266"
+        };
 
-        // قائمة المنتجات مع معرفات (ID) فريدة لضمان عمل الأزرار بشكل مستقل
         const PRODUCTS = [
             { id: 1, name: "ESSENTIAL TEE", price: 150, stock: "1/2", colors: [{ name: "Black", hex: "#000", img: "images/12.png" }, { name: "White", hex: "#fff", img: "images/11.png" }], sizes: ["S", "M", "L", "XL"] },
             { id: 2, name: "CLASSIC SWEATER", price: 199, stock: "1/1", colors: [{ name: "Black", hex: "#000", img: "images/22.png" }], sizes: ["S", "M", "L", "XL"] },
@@ -197,39 +120,30 @@
                 <div class="product-card group" data-pid="${p.id}">
                     <div class="product-image-container mb-6">
                         <img src="${p.colors[0].img}" class="product-image" id="img-${p.id}" onerror="this.src='https://placehold.co/500x667?text=${p.name}'">
-                        <span class="absolute top-4 right-4 bg-white text-[9px] px-2 py-1 font-bold tracking-tighter uppercase">${p.stock}</span>
+                        <span class="absolute top-4 left-4 bg-black text-white text-[8px] px-2 py-1 font-bold uppercase tracking-widest">${p.stock}</span>
                     </div>
                     <div class="text-center">
-                        <h3 class="text-[10px] font-bold tracking-[0.2em] mb-1 uppercase">${p.name}</h3>
-                        <p class="text-[10px] text-gray-400 mb-6 tracking-[0.1em]">${p.price} DH</p>
-                        <div class="flex justify-center gap-4 mb-6">
-                            ${p.colors.map((c, i) => `
-                                <div class="color-dot ${i===0?'active':''}" style="background-color: ${c.hex}" onclick="updateColor(${p.id}, '${c.img}', this)"></div>
-                            `).join('')}
+                        <h3 class="text-[11px] font-bold tracking-widest mb-1 uppercase">${p.name}</h3>
+                        <p class="text-[11px] text-gray-400 mb-5 font-medium">${p.price} DH</p>
+                        <div class="flex justify-center gap-4 mb-5">
+                            ${p.colors.map((c, i) => `<div class="color-dot ${i===0?'active':''}" style="background-color: ${c.hex}" onclick="updateColor(${p.id}, '${c.img}', this)"></div>`).join('')}
                         </div>
-                        <div class="flex justify-center gap-1 mb-6">
-                            ${p.sizes.map((s, i) => `
-                                <div class="size-btn ${i===0?'active':''}" onclick="updateSize(this)">${s}</div>
-                            `).join('')}
+                        <div class="flex justify-center gap-2 mb-6">
+                            ${p.sizes.map((s, i) => `<div class="size-btn ${i===0?'active':''}" onclick="updateSize(this)">${s}</div>`).join('')}
                         </div>
-                        <div class="flex justify-center mb-6">
-                            <div class="qty-box">
-                                <button class="qty-btn" onclick="changeQty(this, -1)">-</button>
-                                <input type="text" value="1" class="qty-val" readonly>
-                                <button class="qty-btn" onclick="changeQty(this, 1)">+</button>
-                            </div>
-                        </div>
-                        <button onclick="openOrderModal(${p.id})" class="w-full bg-black text-white py-4 text-[9px] font-bold tracking-[0.3em] hover:bg-zinc-900 transition uppercase">
-                            Add to Cart
-                        </button>
+                        <button onclick="openOrderModal(${p.id})" class="w-full border-2 border-black py-3 text-[10px] font-black tracking-widest uppercase hover:bg-black hover:text-white transition-all duration-300">اطلب الآن</button>
                     </div>
                 </div>
             `).join('');
         }
 
         window.updateColor = (pid, imgPath, el) => {
-            const imgEl = document.getElementById(`img-${pid}`);
-            if (imgEl) imgEl.src = imgPath;
+            const img = document.getElementById(`img-${pid}`);
+            img.style.opacity = '0.5';
+            setTimeout(() => {
+                img.src = imgPath;
+                img.style.opacity = '1';
+            }, 150);
             el.parentElement.querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
             el.classList.add('active');
         };
@@ -239,26 +153,18 @@
             el.classList.add('active');
         };
 
-        window.changeQty = (btn, delta) => {
-            const input = btn.parentElement.querySelector('.qty-val');
-            let val = parseInt(input.value) + delta;
-            if (val >= 1 && val <= 5) input.value = val;
-        };
-
         window.openOrderModal = (pid) => {
             const card = document.querySelector(`[data-pid="${pid}"]`);
             const p = PRODUCTS.find(item => item.id === pid);
             const size = card.querySelector('.size-btn.active').innerText;
-            const qty = card.querySelector('.qty-val').value;
-            
-            currentOrder = { product: p.name, price: p.price, size: size, qty: qty, total: p.price * qty };
+            currentOrder = { product: p.name, price: p.price, size: size };
             
             document.getElementById('summaryContent').innerHTML = `
-                <div class="flex justify-between"><span>ITEM</span> <span>${currentOrder.product}</span></div>
-                <div class="flex justify-between"><span>SIZE</span> <span>${currentOrder.size}</span></div>
-                <div class="flex justify-between"><span>QUANTITY</span> <span>${currentOrder.qty}</span></div>
-                <div class="flex justify-between mt-1 pt-1 border-t border-gray-100 font-bold"><span>TOTAL</span> <span>${currentOrder.total} DH</span></div>
+                <div class="flex justify-between items-center mb-1 font-medium"><span>${currentOrder.product}</span><span class="text-gray-400">المنتج</span></div>
+                <div class="flex justify-between items-center mb-1 font-medium"><span>${currentOrder.size}</span><span class="text-gray-400">المقاس</span></div>
+                <div class="flex justify-between items-center pt-2 mt-2 border-t border-gray-100 font-bold text-black text-[13px]"><span>${currentOrder.price} DH</span><span>المجموع</span></div>
             `;
+            
             document.getElementById('orderModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         };
@@ -268,27 +174,18 @@
             document.body.style.overflow = '';
         };
 
-        document.getElementById('orderForm').onsubmit = async (e) => {
+        document.getElementById('orderForm').onsubmit = (e) => {
             e.preventDefault();
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
             const city = document.getElementById('custCity').value;
             const address = document.getElementById('custAddress').value;
 
-            // تجهيز نص رسالة الواتساب باللغة العربية واحترافية
-            const waMsg = `السلام عليكم APEDA Shop،\n\nأود تأكيد طلب شراء جديد:\n\n📦 تفاصيل المنتج:\n------------------\nالمنتج: ${currentOrder.product}\nالمقاس: ${currentOrder.size}\nالكمية: ${currentOrder.qty}\nالمجموع: ${currentOrder.total} درهم\n\n👤 معلومات الزبون:\n------------------\nالاسم: ${name}\nالمدينة: ${city}\nالعنوان: ${address}\nرقم الهاتف: ${phone}\n\nشكراً لكم.`;
-            
-            // فتح واتساب في نافذة جديدة
-            window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
-            
-            // تحديث عداد السلة كشكل جمالي
-            const cartCount = document.getElementById('cartCount');
-            cartCount.innerText = parseInt(cartCount.innerText) + parseInt(currentOrder.qty);
-            
+            const waMsg = `طلب جديد من APEDA:\n\n🛍️ المنتج: ${currentOrder.product}\n📏 المقاس: ${currentOrder.size}\n💰 الثمن: ${currentOrder.price} DH\n\n👤 الاسم: ${name}\n📍 المدينة: ${city}\n🏠 العنوان: ${address}\n📞 الهاتف: ${phone}\n\nيرجى تأكيد طلبي.`;
+            window.open(`https://wa.me/${CONFIG.WHATSAPP_NUMBER}?text=${encodeURIComponent(waMsg)}`, '_blank');
             closeModal();
         };
 
-        // تشغيل عرض المنتجات عند تحميل الصفحة
         window.onload = renderProducts;
     </script>
 </body>
