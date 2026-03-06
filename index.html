@@ -44,9 +44,19 @@
 <body>
 
     <header class="border-b border-gray-100 sticky top-0 bg-white/80 backdrop-blur-md z-50 px-6">
-        <div class="container mx-auto flex items-center justify-between h-16 md:h-20">
+        <div class="container mx-auto grid grid-cols-3 items-center h-16 md:h-20">
+            <!-- Left: Brand Text -->
             <div class="text-[12px] font-black tracking-[0.3em] uppercase">A P E D A</div>
-            <div class="flex gap-6 items-center"><i class="fa-solid fa-bag-shopping text-xl"></i></div>
+            
+            <!-- Center: Logo Image -->
+            <div class="flex justify-center">
+                <img src="images/00.png" alt="Logo" class="h-8 md:h-12 object-contain" onerror="this.style.display='none'">
+            </div>
+            
+            <!-- Right: Icon -->
+            <div class="flex justify-end gap-6 items-center">
+                <i class="fa-solid fa-bag-shopping text-xl"></i>
+            </div>
         </div>
     </header>
 
@@ -106,16 +116,17 @@
         };
 
         const PRODUCTS = [
-            { id: 1, name: "ESSENTIAL TEE", price: 150, stock: "1/2", colors: [{ name: "Black", hex: "#000", img: "images/12.png" }, { name: "White", hex: "#fff", img: "images/11.png" }], sizes: ["S", "M", "L", "XL"] },
-            { id: 2, name: "CLASSIC SWEATER", price: 199, stock: "1/1", colors: [{ name: "Black", hex: "#000", img: "images/22.png" }], sizes: ["S", "M", "L", "XL"] },
-            { id: 2, name: "CLASSIC SWEATER", price: 199, stock: "1/1", colors: [{ name: "Black", hex: "#000", img: "images/22.png" }], sizes: ["S", "M", "L", "XL"] },
-            { id: 2, name: "CLASSIC SWEATER", price: 199, stock: "1/1", colors: [{ name: "Black", hex: "#000", img: "images/22.png" }], sizes: ["S", "M", "L", "XL"] },
+            { id: 1, name: "SABR HOODIE", price: 199, stock: "1/1", colors: [{ name: "Black", hex: "#000", img: "images/AA.png" }], sizes: ["S", "M", "L", "XL"] },
+            { id: 2, name: "UNAVAILABLE", price: 000, stock: "0/0", colors: [{ name: "Black", hex: "#000", img: "images/xx.png" }, { name: "White", hex: "#fff", img: "images/11.png" }], sizes: ["S", "M", "L", "XL"] },
+            { id: 3, name: "UNAVAILABLE", price: 000, stock: "0/0", colors: [{ name: "Black", hex: "#000", img: "images/xx.jpg" }], sizes: ["S"] },
+            { id: 4, name: "UNAVAILABLE", price: 000, stock: "0/0", colors: [{ name: "Black", hex: "#000", img: "images/xx.png" }], sizes: ["S"] },
         ];
 
         let currentOrder = null;
 
         function renderProducts() {
             const grid = document.getElementById('productGrid');
+            if(!grid) return;
             grid.innerHTML = PRODUCTS.map(p => `
                 <div class="product-card group" data-pid="${p.id}">
                     <div class="product-image-container mb-6">
